@@ -1,0 +1,148 @@
+
+============================================================================
+0. DATASET
+============================================================================
+4 stations x 6,000 samples = 24,000 field samples (10.0 min of production)
+
+============================================================================
+1. PLATFORM: four tiers, 25 components
+============================================================================
+tier    scope                       contents                                    
+------  --------------------------  --------------------------------------------
+FIELD   PLANT                       4 Smart Objects + 16 Connected Devices, MQTT
+EDGE    PLANT                       4 Edge Gateways x 7 components              
+LEDGER  PLANT+ENTERPRISE_ECOSYSTEM  5 Peer Nodes, 4 Ledger Services             
+CLOUD   ENTERPRISE_ECOSYSTEM        11 components, 3 Open APIs                  
+
+Ledger Services deployed: ConfigurationServices, DataPublishingServices, OrchestrationServices, SynchronizationServices
+Consensus: majority = 3 of 5 Peer Nodes for an append; unanimity to amend
+bootstrap took 0.67 s
+
+============================================================================
+2. PRODUCTION RUN (one thread per Edge Gateway)
+============================================================================
+24,000 field samples processed in 9.34 s (2,568 samples/s)
+
+ledger metric            value  
+-----------------------  -------
+blocks committed         267    
+tx submitted             613    
+tx committed             568    
+tx rejected by contract  45     
+tx failed consensus      0      
+events emitted           568    
+mean commit latency ms   37.1410
+p95 commit latency ms    57.8070
+mean tx per block        2.1300 
+
+============================================================================
+3. ANALYTICS: local KPIs on each gateway, global KPIs on the ledger
+============================================================================
+station  availability  performance  quality  OEE     parts good  kWh   
+-------  ------------  -----------  -------  ------  ----------  ------
+ST1      0.9852        0.9474       1.0000   0.9333  56          0.7080
+ST2      0.8520        0.9253       0.9535   0.7517  41          1.0197
+ST3      1.0000        0.9167       0.9773   0.8958  43          1.3753
+ST4      1.0000        0.9658       0.9836   0.9500  60          0.6179
+
+Global KPIs, aggregated inside the Data Publishing smart contract:
+global KPI                 value     aggregation    contributing EGs  vs central calc
+-------------------------  --------  -------------  ----------------  ---------------
+line_throughput_pph        246.0000  min            4                 0.0000         
+plant_anomalies            13.0000   sum            4                 -              
+plant_availability         0.9593    weighted_mean  4                 0.0000         
+plant_energy_kwh           3.7209    sum            4                 7.11e-15       
+plant_energy_per_part_kwh  0.0186    ratio          4                 3.82e-17       
+plant_mean_cycle_time_s    11.1456   weighted_mean  4                 5.33e-15       
+plant_oee                  0.8827    weighted_mean  4                 0.0000         
+plant_parts_good           200.0000  sum            4                 0.0000         
+plant_peak_vibration_mm_s  4.9738    max            4                 0.0000         
+plant_quality              0.9804    ratio          4                 0.0000         
+
+Largest difference against a single-process calculation over the same raw data: 7.11e-15
+
+============================================================================
+4. AUTOMATION: distributed workflows coordinated by smart contracts
+============================================================================
+orchestration counter  value
+---------------------  -----
+operations             159  
+parts done             30   
+parts scrapped         3    
+parts started          56   
+rule violations        0    
+
+Station locks held (distributed mutual exclusion): {'ST1': 'EG-ST1', 'ST2': 'EG-ST2', 'ST3': 'EG-ST3', 'ST4': 'EG-ST4'}
+
+gateway  parts processed  claims refused by rule  illegal reports blocked  local safety reactions  mean reaction ms  on-board trips
+-------  ---------------  ----------------------  -----------------------  ----------------------  ----------------  --------------
+EG-ST1   56               0                       0                        2                       0.0340            0             
+EG-ST2   41               2                       0                        11                      0.0350            0             
+EG-ST3   31               13                      0                        0                       0.0000            0             
+EG-ST4   31               30                      0                        0                       0.0000            0             
+
+A refused claim is the ledger enforcing the global routing rule: a station
+cannot take a part that is not next in its route.
+
+============================================================================
+5. DIGITAL MODELS: drift detection, correction and simulation
+============================================================================
+station  parameter           as designed  model now  observed  rel. drift  model v
+-------  ------------------  -----------  ---------  --------  ----------  -------
+ST1      ideal_cycle_time_s  10.0000      10.0000    10.4161   0.0416      2      
+ST1      nominal_power_kw    4.0000       4.1240     4.2480    0.0620      2      
+ST2      ideal_cycle_time_s  11.0000      11.3477    11.6953   0.0632      3      
+ST2      nominal_power_kw    6.5000       6.3092     6.1184    -0.0587     3      
+ST3      ideal_cycle_time_s  12.5000      12.9920    13.4841   0.0787      3      
+ST3      nominal_power_kw    7.5000       7.8758     8.2516    0.1002      3      
+ST4      ideal_cycle_time_s  9.5000       9.5000     9.7410    0.0254      2      
+ST4      nominal_power_kw    3.5000       3.6036     3.7071    0.0592      2      
+
+Model corrections applied by consensus: 6   |   mirrored into the Cloud Model Repository: 6
+
+simulation (Open API for Virtualization)  value   
+----------------------------------------  --------
+bottleneck station                        ST3     
+bottleneck cycle time (s)                 12.9920 
+predicted line throughput (parts/h)       260.6006
+measured line throughput (parts/h)        246.0000
+prediction error (%)                      5.9352  
+what-if: ST3 cycle time -> 9.0 s                  
+  predicted throughput change (%)         14.4908 
+  bottleneck moves to                     ST2     
+
+============================================================================
+6. LEDGER INTEGRITY, SECURITY AND NETWORK TRAFFIC
+============================================================================
+ledger check                             result   
+---------------------------------------  ---------
+Peer Nodes                               5        
+chain height                             267      
+all replicas hold the identical chain    yes      
+all replicas hold the identical state    yes      
+every chain passes its hash-chain check  yes      
+ledger size on disk-equivalent           523.3 KiB
+
+Tamper test: editing one committed record makes the chain check fail -> detected (merkle root mismatch in block 1); after restoring: intact
+
+security check                                     outcome                                                                 
+-------------------------------------------------  ------------------------------------------------------------------------
+engineer calls Open API for Analytics              200 ok                                                                  
+guest calls the same endpoint                      403 not authorised: no applicable policy (default deny)                 
+parameter outside the ledger-held safety envelope  rejected by consensus: speed_factor=5.0 outside allowed range [0.2, 1.2]
+
+link       messages  traffic    mean latency (ms)
+---------  --------  ---------  -----------------
+field_lan  26,617    6.0 MiB    1.1580           
+plant_lan  1,200     241.7 KiB  2.3190           
+peer_p2p   3,484     2.5 MiB    4.5900           
+wan_cloud  146       54.2 KiB   50.0260          
+
+Raw field records that left the plant: 0 (the gateways publish KPIs and filtered aggregates instead)
+
+============================================================================
+OUTPUT
+============================================================================
+results  -> results\demo_results.json
+figure   -> results\figures\kpis.png
+figure   -> results\figures\traffic_and_drift.png

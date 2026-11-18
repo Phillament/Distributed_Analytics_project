@@ -1,0 +1,113 @@
+{
+  "source": "synthetic (the paper reports no dataset)",
+  "paper": "Isaja & Soldatos, IFAC-PapersOnLine 51-11 (2018) 370-375",
+  "variant": "improved",
+  "seed": 20180321,
+  "sample_rate_hz": 10.0,
+  "duration_s": 1800.0,
+  "stations": [
+    "ST1",
+    "ST2",
+    "ST3",
+    "ST4"
+  ],
+  "rows": 72000,
+  "columns": [
+    "t",
+    "station",
+    "vibration_mm_s",
+    "temperature_c",
+    "power_kw",
+    "motor_current_a",
+    "running",
+    "part_done",
+    "part_ok",
+    "cycle_time_s"
+  ],
+  "as_designed_models": {
+    "ST1": {
+      "ideal_cycle_time_s": 10.0
+    },
+    "ST2": {
+      "ideal_cycle_time_s": 11.0
+    },
+    "ST3": {
+      "ideal_cycle_time_s": 12.5
+    },
+    "ST4": {
+      "ideal_cycle_time_s": 9.5
+    }
+  },
+  "true_specs": [
+    {
+      "station": "ST1",
+      "true_cycle_time_s": 10.4,
+      "cycle_time_sigma_s": 0.45,
+      "true_power_kw": 4.3,
+      "power_sigma_kw": 0.3,
+      "base_vibration_mm_s": 2.6,
+      "vibration_sigma": 0.3,
+      "base_temperature_c": 31.0,
+      "scrap_rate": 0.012,
+      "mtbf_s": 900.0,
+      "mttr_s": 25.0,
+      "wear_rate_per_hour": 0.03,
+      "degradation_at_s": null,
+      "degradation_gain": 2.2
+    },
+    {
+      "station": "ST2",
+      "true_cycle_time_s": 11.6,
+      "cycle_time_sigma_s": 0.6,
+      "true_power_kw": 7.1,
+      "power_sigma_kw": 0.45,
+      "base_vibration_mm_s": 3.1,
+      "vibration_sigma": 0.35,
+      "base_temperature_c": 33.5,
+      "scrap_rate": 0.018,
+      "mtbf_s": 720.0,
+      "mttr_s": 35.0,
+      "wear_rate_per_hour": 0.045,
+      "degradation_at_s": 1200.0,
+      "degradation_gain": 2.2
+    },
+    {
+      "station": "ST3",
+      "true_cycle_time_s": 9.0,
+      "cycle_time_sigma_s": 0.5,
+      "true_power_kw": 8.2,
+      "power_sigma_kw": 0.55,
+      "base_vibration_mm_s": 3.4,
+      "vibration_sigma": 0.4,
+      "base_temperature_c": 35.0,
+      "scrap_rate": 0.022,
+      "mtbf_s": 600.0,
+      "mttr_s": 45.0,
+      "wear_rate_per_hour": 0.055,
+      "degradation_at_s": null,
+      "degradation_gain": 2.2
+    },
+    {
+      "station": "ST4",
+      "true_cycle_time_s": 9.8,
+      "cycle_time_sigma_s": 0.4,
+      "true_power_kw": 3.7,
+      "power_sigma_kw": 0.25,
+      "base_vibration_mm_s": 2.2,
+      "vibration_sigma": 0.25,
+      "base_temperature_c": 30.0,
+      "scrap_rate": 0.009,
+      "mtbf_s": 1100.0,
+      "mttr_s": 20.0,
+      "wear_rate_per_hour": 0.025,
+      "degradation_at_s": null,
+      "degradation_gain": 2.2
+    }
+  ],
+  "phenomena": [
+    "progressive wear",
+    "vibration degradation on ST2",
+    "stochastic micro-stoppages",
+    "scrap"
+  ]
+}

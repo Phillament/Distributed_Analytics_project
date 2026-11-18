@@ -1,0 +1,717 @@
+{
+  "run": {
+    "samples": 6000,
+    "stations": 4,
+    "peers": 5,
+    "protocol": "MQTT",
+    "realtime": false
+  },
+  "dataset": {
+    "stations": [
+      "ST1",
+      "ST2",
+      "ST3",
+      "ST4"
+    ],
+    "samples_per_station": 6000,
+    "sample_rate_hz": 10.0
+  },
+  "platform": {
+    "bootstrap_s": 0.673,
+    "tiers": {
+      "FIELD": {
+        "scope": "PLANT",
+        "edge_nodes": 20,
+        "smart_objects": 4,
+        "connected_devices": 16,
+        "real_world_entities": [
+          "THING",
+          "ENVIRONMENT",
+          "PEOPLE",
+          "THING",
+          "ENVIRONMENT",
+          "PEOPLE",
+          "THING",
+          "ENVIRONMENT",
+          "PEOPLE",
+          "THING",
+          "ENVIRONMENT",
+          "PEOPLE"
+        ],
+        "components": [
+          "Policy Decision Point",
+          "Ledger Clients"
+        ],
+        "protocols": [
+          "MQTT"
+        ]
+      },
+      "EDGE": {
+        "scope": "PLANT",
+        "gateways": 4,
+        "components": [
+          {
+            "component": "Edge Automation Services",
+            "status": "ENABLER",
+            "realises": "AUTOMATION",
+            "class": "EdgeAutomationServices"
+          },
+          {
+            "component": "Edge Analytics Engine",
+            "status": "ENABLER",
+            "realises": "ANALYTICS",
+            "class": "EdgeAnalyticsEngine"
+          },
+          {
+            "component": "Field Abstraction",
+            "status": "COMPONENT",
+            "realises": "FIELD_ABSTRACTION_AND_DATA_ROUTING",
+            "class": "FieldAbstraction"
+          },
+          {
+            "component": "Data Routing & Pre-processing",
+            "status": "COMPONENT",
+            "realises": "FIELD_ABSTRACTION_AND_DATA_ROUTING",
+            "class": "DataRouting"
+          },
+          {
+            "component": "Policy Decision Point",
+            "status": "COMPONENT",
+            "realises": "SECURITY",
+            "class": "PolicyDecisionPoint"
+          },
+          {
+            "component": "Ledger Clients",
+            "status": "COMPONENT",
+            "realises": "ALL_DOMAINS",
+            "class": "EdgeLedgerClients"
+          },
+          {
+            "component": "Node Management",
+            "status": "COMPONENT",
+            "realises": "MANAGEMENT",
+            "class": "NodeManagement"
+          }
+        ]
+      },
+      "LEDGER": {
+        "scope": "PLANT+ENTERPRISE_ECOSYSTEM",
+        "peer_nodes": 5,
+        "host_tiers": [
+          "CLOUD",
+          "EDGE"
+        ],
+        "services": [
+          "ConfigurationServices",
+          "DataPublishingServices",
+          "OrchestrationServices",
+          "SynchronizationServices"
+        ],
+        "enabler": "Distributed Ledger Enabler"
+      },
+      "CLOUD": {
+        "scope": "ENTERPRISE_ECOSYSTEM",
+        "components": [
+          {
+            "component": "Open API for Automation",
+            "status": "ENABLER",
+            "classification": "PUBLIC_CLOUD_SERVICE",
+            "realises": "AUTOMATION",
+            "class": "OpenApiForAutomation"
+          },
+          {
+            "component": "Open API for Analytics",
+            "status": "ENABLER",
+            "classification": "PUBLIC_CLOUD_SERVICE",
+            "realises": "ANALYTICS",
+            "class": "OpenApiForAnalytics"
+          },
+          {
+            "component": "Open API for Virtualization",
+            "status": "ENABLER",
+            "classification": "PUBLIC_CLOUD_SERVICE",
+            "realises": "SIMULATION",
+            "class": "OpenApiForVirtualization"
+          },
+          {
+            "component": "Identity Management",
+            "status": "COMPONENT",
+            "classification": "INTERNAL_CLOUD_SERVICE",
+            "realises": "SECURITY",
+            "class": "IdentityManagement"
+          },
+          {
+            "component": "Model Repository",
+            "status": "COMPONENT",
+            "classification": "INTERNAL_CLOUD_SERVICE",
+            "realises": "DIGITAL_MODELS",
+            "class": "ModelRepository"
+          },
+          {
+            "component": "Data Storage",
+            "status": "COMPONENT",
+            "classification": "INTERNAL_CLOUD_SERVICE",
+            "realises": "INTERNAL",
+            "class": "DataStorage"
+          },
+          {
+            "component": "Security Management",
+            "status": "COMPONENT",
+            "classification": "PLATFORM_CLOUD_TOOL",
+            "realises": "SECURITY",
+            "class": "SecurityManagement"
+          },
+          {
+            "component": "Policy Decision Point",
+            "status": "COMPONENT",
+            "classification": "PLATFORM_CLOUD_TOOL",
+            "realises": "SECURITY",
+            "class": "PolicyDecisionPoint"
+          },
+          {
+            "component": "Ledger Clients",
+            "status": "COMPONENT",
+            "classification": "PLATFORM_CLOUD_TOOL",
+            "realises": "ALL_DOMAINS",
+            "class": "CloudLedgerClients"
+          },
+          {
+            "component": "Real-to-Digital Synchronization",
+            "status": "COMPONENT",
+            "classification": "PLATFORM_CLOUD_TOOL",
+            "realises": "DIGITAL_MODELS",
+            "class": "RealToDigitalSynchronization"
+          },
+          {
+            "component": "Platform Management",
+            "status": "COMPONENT",
+            "classification": "PLATFORM_CLOUD_TOOL",
+            "realises": "MANAGEMENT",
+            "class": "PlatformManagement"
+          }
+        ]
+      }
+    }
+  },
+  "production_run": {
+    "samples_processed": 24000,
+    "wall_time_s": 9.344,
+    "kpi_publications": 201,
+    "model_reports": 8,
+    "gateways": 4,
+    "ledger": {
+      "blocks_committed": 267,
+      "tx_submitted": 613,
+      "tx_committed": 568,
+      "tx_rejected_by_contract": 45,
+      "tx_failed_consensus": 0,
+      "events_emitted": 568,
+      "mean_commit_latency_ms": 37.141,
+      "p95_commit_latency_ms": 57.807,
+      "mean_tx_per_block": 2.13
+    },
+    "network": {
+      "field_lan": {
+        "messages": 26617,
+        "bytes": 6313949,
+        "mean_latency_ms": 1.158,
+        "p95_latency_ms": 1.391,
+        "retransmissions": 0
+      },
+      "peer_p2p": {
+        "messages": 3471,
+        "bytes": 2586084,
+        "mean_latency_ms": 4.59,
+        "p95_latency_ms": 5.46,
+        "retransmissions": 0
+      },
+      "plant_lan": {
+        "messages": 1200,
+        "bytes": 247531,
+        "mean_latency_ms": 2.319,
+        "p95_latency_ms": 2.81,
+        "retransmissions": 0
+      },
+      "wan_cloud": {
+        "messages": 126,
+        "bytes": 50330,
+        "mean_latency_ms": 50.011,
+        "p95_latency_ms": 56.601,
+        "retransmissions": 0
+      }
+    }
+  },
+  "analytics": {
+    "station_kpis": {
+      "ST1": {
+        "availability": 0.9851666666666667,
+        "performance": 0.947386229064456,
+        "quality": 1.0,
+        "oee": 0.9333333333333333,
+        "throughput_pph": 336.0,
+        "mean_cycle_time_s": 10.416071428571437,
+        "energy_kwh": 0.7080023969444438,
+        "energy_per_part_kwh": 0.012642899945436496,
+        "vibration_rms": 2.6057559058977207,
+        "parts_total": 56.0,
+        "parts_good": 56.0
+      },
+      "ST2": {
+        "availability": 0.852,
+        "performance": 0.9252738654147105,
+        "quality": 0.9534883720930233,
+        "oee": 0.7516666666666667,
+        "throughput_pph": 246.0,
+        "mean_cycle_time_s": 11.6953488372093,
+        "energy_kwh": 1.0197392805555554,
+        "energy_per_part_kwh": 0.02487168976964769,
+        "vibration_rms": 2.9001861009939947,
+        "parts_total": 43.0,
+        "parts_good": 41.0
+      },
+      "ST3": {
+        "availability": 1.0,
+        "performance": 0.9166666666666666,
+        "quality": 0.9772727272727273,
+        "oee": 0.8958333333333334,
+        "throughput_pph": 258.0,
+        "mean_cycle_time_s": 13.484090909090911,
+        "energy_kwh": 1.3752600861111062,
+        "energy_per_part_kwh": 0.031982792700258285,
+        "vibration_rms": 3.441300454561647,
+        "parts_total": 44.0,
+        "parts_good": 43.0
+      },
+      "ST4": {
+        "availability": 1.0,
+        "performance": 0.9658333333333333,
+        "quality": 0.9836065573770492,
+        "oee": 0.95,
+        "throughput_pph": 360.0,
+        "mean_cycle_time_s": 9.74098360655738,
+        "energy_kwh": 0.6178500455555541,
+        "energy_per_part_kwh": 0.010297500759259235,
+        "vibration_rms": 2.220784930544404,
+        "parts_total": 61.0,
+        "parts_good": 60.0
+      }
+    },
+    "global_kpis": {
+      "plant_parts_good": {
+        "value": 200.0,
+        "method": "sum",
+        "unit": "parts",
+        "contributors": 4,
+        "t": 1793729690.9856868
+      },
+      "plant_energy_kwh": {
+        "value": 3.7208518091666596,
+        "method": "sum",
+        "unit": "kWh",
+        "contributors": 4,
+        "t": 1793729691.0337238
+      },
+      "line_throughput_pph": {
+        "value": 246.0,
+        "method": "min",
+        "unit": "parts/h",
+        "contributors": 4,
+        "t": 1793729691.1225915
+      },
+      "plant_availability": {
+        "value": 0.9592916666666668,
+        "method": "weighted_mean",
+        "unit": "ratio",
+        "contributors": 4,
+        "t": 1793729691.1731124
+      },
+      "plant_oee": {
+        "value": 0.8827083333333333,
+        "method": "weighted_mean",
+        "unit": "ratio",
+        "contributors": 4,
+        "t": 1793729691.2183647
+      },
+      "plant_mean_cycle_time_s": {
+        "value": 11.145588235294122,
+        "method": "weighted_mean",
+        "unit": "s",
+        "contributors": 4,
+        "t": 1793729691.2652042
+      },
+      "plant_quality": {
+        "value": 0.9803921568627451,
+        "method": "ratio",
+        "unit": "ratio",
+        "contributors": 4,
+        "t": 1793729691.312653
+      },
+      "plant_energy_per_part_kwh": {
+        "value": 0.018604259045833297,
+        "method": "ratio",
+        "unit": "kWh/part",
+        "contributors": 4,
+        "t": 1793729691.3582394
+      },
+      "plant_peak_vibration_mm_s": {
+        "value": 4.97376,
+        "method": "max",
+        "unit": "mm/s",
+        "contributors": 4,
+        "t": 1793729691.4061072
+      },
+      "plant_anomalies": {
+        "value": 13.0,
+        "method": "sum",
+        "unit": "count",
+        "contributors": 4,
+        "t": 1793729691.4528031
+      }
+    },
+    "max_difference_vs_central": 7.105427357601002e-15
+  },
+  "automation": {
+    "counters": {
+      "parts_started": 56,
+      "parts_done": 30,
+      "parts_scrapped": 3,
+      "operations": 159,
+      "rule_violations": 0
+    },
+    "locks": {
+      "ST1": "EG-ST1",
+      "ST2": "EG-ST2",
+      "ST3": "EG-ST3",
+      "ST4": "EG-ST4"
+    },
+    "workflows": [
+      [
+        "EG-ST1",
+        56,
+        0,
+        0,
+        2,
+        0.034,
+        0
+      ],
+      [
+        "EG-ST2",
+        41,
+        2,
+        0,
+        11,
+        0.035,
+        0
+      ],
+      [
+        "EG-ST3",
+        31,
+        13,
+        0,
+        0,
+        0.0,
+        0
+      ],
+      [
+        "EG-ST4",
+        31,
+        30,
+        0,
+        0,
+        0.0,
+        0
+      ]
+    ]
+  },
+  "simulation": {
+    "models": {
+      "ST1": {
+        "entity": "ST1-machine",
+        "kind": "MACHINE",
+        "params": {
+          "nominal_power_kw": 4.124007190833331,
+          "ideal_cycle_time_s": 10.0
+        },
+        "thresholds": {
+          "nominal_power_kw": 0.05,
+          "ideal_cycle_time_s": 0.05
+        },
+        "alpha": 0.5,
+        "version": 2,
+        "last_sync_t": 1793729689.7704077,
+        "sync_count": 1,
+        "drift": {
+          "nominal_power_kw": {
+            "relative": 0.06200359541666556,
+            "observed": 4.248014381666662,
+            "modelled": 4.0,
+            "n": 6000,
+            "t": 1793729689.7704077
+          },
+          "ideal_cycle_time_s": {
+            "relative": 0.04160714285714366,
+            "observed": 10.416071428571437,
+            "modelled": 10.0,
+            "n": 56,
+            "t": 1793729689.8169222
+          }
+        }
+      },
+      "ST2": {
+        "entity": "ST2-machine",
+        "kind": "MACHINE",
+        "params": {
+          "nominal_power_kw": 6.3092178416666655,
+          "ideal_cycle_time_s": 11.347674418604651
+        },
+        "thresholds": {
+          "nominal_power_kw": 0.05,
+          "ideal_cycle_time_s": 0.05
+        },
+        "alpha": 0.5,
+        "version": 3,
+        "last_sync_t": 1793729690.3792892,
+        "sync_count": 2,
+        "drift": {
+          "nominal_power_kw": {
+            "relative": -0.05870220256410277,
+            "observed": 6.118435683333332,
+            "modelled": 6.5,
+            "n": 6000,
+            "t": 1793729690.3310108
+          },
+          "ideal_cycle_time_s": {
+            "relative": 0.06321353065539093,
+            "observed": 11.6953488372093,
+            "modelled": 11.0,
+            "n": 43,
+            "t": 1793729690.3792892
+          }
+        }
+      },
+      "ST3": {
+        "entity": "ST3-machine",
+        "kind": "MACHINE",
+        "params": {
+          "nominal_power_kw": 7.875780258333318,
+          "ideal_cycle_time_s": 12.992045454545455
+        },
+        "thresholds": {
+          "nominal_power_kw": 0.05,
+          "ideal_cycle_time_s": 0.05
+        },
+        "alpha": 0.5,
+        "version": 3,
+        "last_sync_t": 1793729690.940321,
+        "sync_count": 2,
+        "drift": {
+          "nominal_power_kw": {
+            "relative": 0.10020806888888482,
+            "observed": 8.251560516666636,
+            "modelled": 7.5,
+            "n": 6000,
+            "t": 1793729690.8941786
+          },
+          "ideal_cycle_time_s": {
+            "relative": 0.0787272727272729,
+            "observed": 13.484090909090911,
+            "modelled": 12.5,
+            "n": 44,
+            "t": 1793729690.940321
+          }
+        }
+      },
+      "ST4": {
+        "entity": "ST4-machine",
+        "kind": "MACHINE",
+        "params": {
+          "nominal_power_kw": 3.6035501366666622,
+          "ideal_cycle_time_s": 9.5
+        },
+        "thresholds": {
+          "nominal_power_kw": 0.05,
+          "ideal_cycle_time_s": 0.05
+        },
+        "alpha": 0.5,
+        "version": 2,
+        "last_sync_t": 1793729691.4978166,
+        "sync_count": 1,
+        "drift": {
+          "nominal_power_kw": {
+            "relative": 0.05917150666666414,
+            "observed": 3.7071002733333245,
+            "modelled": 3.5,
+            "n": 6000,
+            "t": 1793729691.4978166
+          },
+          "ideal_cycle_time_s": {
+            "relative": 0.02536669542709266,
+            "observed": 9.74098360655738,
+            "modelled": 9.5,
+            "n": 61,
+            "t": 1793729691.5455894
+          }
+        }
+      }
+    },
+    "run": {
+      "predicted_throughput_pph": 260.600635,
+      "predicted_parts_good": 43.433439,
+      "predicted_energy_kwh": 3.503422,
+      "predicted_energy_per_part_kwh": 0.080662,
+      "bottleneck_station": "ST3",
+      "bottleneck_cycle_time_s": 12.992045,
+      "availability": 0.959292,
+      "quality": 0.980392,
+      "duration_s": 600.0,
+      "model_source": "synced",
+      "stations": 4
+    },
+    "what_if": {
+      "overrides": {
+        "ST3": {
+          "ideal_cycle_time_s": 9.0
+        }
+      },
+      "baseline": {
+        "predicted_throughput_pph": 260.600635,
+        "predicted_parts_good": 43.433439,
+        "predicted_energy_kwh": 3.503422,
+        "predicted_energy_per_part_kwh": 0.080662,
+        "bottleneck_station": "ST3",
+        "bottleneck_cycle_time_s": 12.992045,
+        "availability": 0.959292,
+        "quality": 0.980392,
+        "duration_s": 600.0,
+        "model_source": "synced",
+        "stations": 4
+      },
+      "scenario": {
+        "predicted_throughput_pph": 298.363803,
+        "predicted_parts_good": 49.7273,
+        "predicted_energy_kwh": 3.503422,
+        "predicted_energy_per_part_kwh": 0.070453,
+        "bottleneck_station": "ST2",
+        "bottleneck_cycle_time_s": 11.347674,
+        "availability": 0.959292,
+        "quality": 0.980392,
+        "duration_s": 600.0,
+        "model_source": "what-if",
+        "stations": 4
+      },
+      "throughput_delta_pph": 37.763168,
+      "throughput_change_pct": 14.4908,
+      "bottleneck_moved": true,
+      "new_bottleneck": "ST2"
+    },
+    "measured_throughput_pph": 246.0
+  },
+  "ledger_integrity": {
+    "replicas": {
+      "replicas_checked": 5,
+      "chains_identical": true,
+      "states_identical": true,
+      "all_chains_intact": true,
+      "heights": {
+        "PN-0": 267,
+        "PN-1": 267,
+        "PN-2": 267,
+        "PN-3": 267,
+        "PN-4": 267
+      },
+      "integrity": {
+        "PN-0": "chain intact",
+        "PN-1": "chain intact",
+        "PN-2": "chain intact",
+        "PN-3": "chain intact",
+        "PN-4": "chain intact"
+      },
+      "fingerprints": {
+        "PN-0": "3dbe15070527be8b",
+        "PN-1": "3dbe15070527be8b",
+        "PN-2": "3dbe15070527be8b",
+        "PN-3": "3dbe15070527be8b",
+        "PN-4": "3dbe15070527be8b"
+      }
+    },
+    "tamper_detected": true,
+    "tamper_reason": "merkle root mismatch in block 1",
+    "chain_restored": true
+  },
+  "security": {
+    "engineer_status": 200,
+    "guest_status": 403,
+    "guest_reason": "not authorised: no applicable policy (default deny)",
+    "envelope_violation_rejected": true,
+    "envelope_violation_reason": "speed_factor=5.0 outside allowed range [0.2, 1.2]",
+    "pdp": {
+      "EG-ST1": {
+        "evaluations": 2,
+        "permits": 2,
+        "denies": 0,
+        "cache_hits": 1,
+        "cache_misses": 1,
+        "cache_hit_rate": 0.5,
+        "policy_fetch_latency_ms": 52.49
+      },
+      "EG-ST2": {
+        "evaluations": 11,
+        "permits": 11,
+        "denies": 0,
+        "cache_hits": 10,
+        "cache_misses": 1,
+        "cache_hit_rate": 0.9091,
+        "policy_fetch_latency_ms": 54.11
+      },
+      "EG-ST3": {
+        "evaluations": 0,
+        "permits": 0,
+        "denies": 0,
+        "cache_hits": 0,
+        "cache_misses": 0,
+        "cache_hit_rate": 0.0,
+        "policy_fetch_latency_ms": 0.0
+      },
+      "EG-ST4": {
+        "evaluations": 0,
+        "permits": 0,
+        "denies": 0,
+        "cache_hits": 0,
+        "cache_misses": 0,
+        "cache_hit_rate": 0.0,
+        "policy_fetch_latency_ms": 0.0
+      }
+    }
+  },
+  "network": {
+    "field_lan": {
+      "messages": 26617,
+      "bytes": 6313949,
+      "mean_latency_ms": 1.158,
+      "p95_latency_ms": 1.391,
+      "retransmissions": 0
+    },
+    "peer_p2p": {
+      "messages": 3484,
+      "bytes": 2592180,
+      "mean_latency_ms": 4.59,
+      "p95_latency_ms": 5.459,
+      "retransmissions": 0
+    },
+    "plant_lan": {
+      "messages": 1200,
+      "bytes": 247531,
+      "mean_latency_ms": 2.319,
+      "p95_latency_ms": 2.81,
+      "retransmissions": 0
+    },
+    "wan_cloud": {
+      "messages": 146,
+      "bytes": 55533,
+      "mean_latency_ms": 50.026,
+      "p95_latency_ms": 57.205,
+      "retransmissions": 0
+    }
+  },
+  "raw_records_leaving_plant": 0
+}

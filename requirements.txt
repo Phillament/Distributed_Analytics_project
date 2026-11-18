@@ -1,0 +1,3 @@
+# The platform itself (faredge/) is pure Python standard library.
+# matplotlib is used only to render the two result figures in run_demo.py.
+matplotlib>=3.7
